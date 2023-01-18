@@ -1,6 +1,7 @@
 {
  "dependencies": {
-    "chromium-browser xvfb": "2.0"
+    "chromium-browser xvfb": "2.0",
+    "xvfb": "2.0"
   }
 	
 }
