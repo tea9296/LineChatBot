@@ -1,5 +1,5 @@
 Flask==2.2.2
-Xvfb
 line-bot-sdk
+chromium-browser xvfb
 openai
 pyChatGPT
