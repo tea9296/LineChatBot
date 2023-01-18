@@ -2,6 +2,9 @@
  "dependencies": {
     "chromium-browser xvfb": "2.0",
     "xvfb": "2.0"
-  }
+  },
+  "scripts": {
+    "install-xvfb": "apt-get update && apt-get install -y xvfb"
+}
 	
 }
