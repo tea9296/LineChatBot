@@ -14,9 +14,9 @@ import os
 import openai
 from pyChatGPT import ChatGPT
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from lineeebot import LineBotApi, WebhookHandler
+from lineeebot.exceptions import InvalidSignatureError
+from lineeebot.models import MessageEvent, TextMessage, TextSendMessage
 from pyChatGPT import ChatGPT
 
 chat_language = os.getenv("INIT_LANGUAGE", default = "zh")
