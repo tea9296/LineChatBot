@@ -5,8 +5,14 @@ import datetime
 
 
 def getLiveInfo(url:str="https://schedule.hololive.tv/simple"):
+    # set header in order to post timezone cookie
+    headers = {
+            "cookie": "timezone=Asia/Taipei",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
+    
+    }
     # get the webpage
-    htmls = requests.get(url)
+    htmls = requests.get(url,headers=headers)
     # create a soup object
     soup = bs4.BeautifulSoup(htmls.text, 'html.parser')
     # find the live time information by search all html url in the page
@@ -55,3 +61,4 @@ def getSchedule(url:str="https://schedule.hololive.tv/simple/hololive"):
     return res
 
 
+print(getSchedule())
