@@ -57,9 +57,9 @@ def handle_message(event):
             TextSendMessage(text=reply_msg))
         return
     
-    elif event.message.text.lower() in ["help","'幫助"]:
+    elif event.message.text.lower() in ["help","幫助"]:
         reply_msg = "search hololive schedule use \'schedule\' or \'hololive\'\n" + \
-                    "search english schedule use \'en\' or \'english\'\n" + \
+                    "search english schedule use \'en\' or \'english\'\n"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
