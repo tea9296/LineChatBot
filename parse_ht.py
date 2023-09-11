@@ -79,10 +79,10 @@ def exchange_rate():
     country_info = soup.find_all("div","hidden-phone print_show xrt-cur-indent")
     
  
-    res_str = "       本行現金買入      本行現金賣出      本行即期買入      本行即期賣出\n"
+    res_str = "       即期買入      即期賣出\n"
     for i in range(0,len(current_info),4):
         clean_country = country_info[i//4].get_text().replace(' ','').replace('\r','').replace('\n','')
-        res_str+=(clean_country + "      " + current_info[i].get_text() + "      " + current_info[i+1].get_text() + "      " + current_info[i+2].get_text() + "      " + current_info[i+3].get_text() + "\n")
+        res_str+=(clean_country + "      " + current_info[i+2].get_text() + "      " + current_info[i+3].get_text() + "\n")
         
         
     return res_str
