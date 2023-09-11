@@ -3,7 +3,7 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from chatgpt import ChatGPT
-import parse
+import parse_ht
 import os
 
 line_bot_api = LineBotApi(os.getenv("LINE_CHANNEL_ACCESS_TOKEN"))
@@ -43,7 +43,7 @@ def handle_message(event):
     
     if event.message.text.lower() in ["schedule","hololive","jp","japanese","holo"]:
         
-        reply_msg = parse.getSchedule()
+        reply_msg = parse_ht.getSchedule()
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
@@ -51,15 +51,25 @@ def handle_message(event):
     
     elif event.message.text.lower() in ["en","english"]:
         
-        reply_msg = parse.getSchedule("https://schedule.hololive.tv/simple/english")
+        reply_msg = parse_ht.getSchedule("https://schedule.hololive.tv/simple/english")
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))
         return
     
+    elif event.message.text.lower() in ["匯率","rate","exchange"]:
+        
+        reply_msg = parse_ht.exchange_rate()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_msg))
+        return
+    
+    
     elif event.message.text.lower() in ["help","幫助"]:
         reply_msg = "search hololive schedule use \'schedule\' or \'hololive\'\n" + \
-                    "search english schedule use \'en\' or \'english\'\n"
+                    "search english schedule use \'en\' or \'english\'\n" + \
+                    "search exchange rate use \'匯率\' or \'rate\' or \'exchange\'\n" 
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=reply_msg))

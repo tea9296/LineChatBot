@@ -61,4 +61,29 @@ def getSchedule(url:str="https://schedule.hololive.tv/simple/hololive"):
     return res
 
 
-print(getSchedule())
+
+
+
+def exchange_rate():
+    #session = requests_html.HTMLSession()
+
+    #first_page = session.get("https://www.esunbank.com/zh-tw/personal/deposit/rate/forex/foreign-exchange-rates")
+    #first_page.html.render(sleep=5)
+
+    # # get the webpage
+    htmls = requests.get("https://rate.bot.com.tw/xrt")
+    # create a soup object
+    soup = bs4.BeautifulSoup(htmls.text, 'html.parser')
+    # find the live time information by search all html url in the page
+    current_info = soup.find_all("td", "text-right display_none_print_show print_width")
+    country_info = soup.find_all("div","hidden-phone print_show xrt-cur-indent")
+    
+ 
+    res_str = "       本行現金買入      本行現金賣出      本行即期買入      本行即期賣出\n"
+    for i in range(0,len(current_info),4):
+        clean_country = country_info[i//4].get_text().replace(' ','').replace('\r','').replace('\n','')
+        res_str+=(clean_country + "      " + current_info[i].get_text() + "      " + current_info[i+1].get_text() + "      " + current_info[i+2].get_text() + "      " + current_info[i+3].get_text() + "\n")
+        
+        
+    return res_str
+    
