@@ -51,11 +51,9 @@ def getSchedule(url:str="https://schedule.hololive.tv/simple/hololive"):
     # get tomorrow, only month and day
     tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%m/%d")
     dates = [yesterday, today, tomorrow]
-    if len(info)==2:
-        dates = [today, tomorrow]
     res = ""
 
-    for i in range(len(dates)):
+    for i in range(len(info)):
         res += dates[i] + "\n"
         for j in range(len(info[i])):
             res += info[i][j][0] + " " + info[i][j][1] + "\n"
