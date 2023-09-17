@@ -53,7 +53,7 @@ def getSchedule(url:str="https://schedule.hololive.tv/simple/hololive"):
 
     res = ""
 
-    for i in range(len(dates)):
+    for i in range(len(info)):
         res += dates[i] + "\n"
         for j in range(len(info[i])):
             res += info[i][j][0] + " " + info[i][j][1] + "\n"
