@@ -2,6 +2,7 @@ import bs4
 import requests
 import re
 import datetime
+import pytz
 
 
 def getLiveInfo(url:str="https://schedule.hololive.tv/simple"):
@@ -42,18 +43,19 @@ def getLiveInfo(url:str="https://schedule.hololive.tv/simple"):
 
 def getSchedule(url:str="https://schedule.hololive.tv/simple/hololive"):
     info = getLiveInfo(url)
-
+    tw = pytz.timezone('Asia/Taipei')
     # get current day, only month and day
-    today = datetime.datetime.now().strftime("%m/%d")
+    today = datetime.datetime.now(tw).strftime("%m/%d")
     # get yesterday, only month and day
     yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%m/%d")
     # get tomorrow, only month and day
     tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%m/%d")
     dates = [yesterday, today, tomorrow]
-
+    if len(info)==2:
+        dates = [today, tomorrow]
     res = ""
 
-    for i in range(len(info)):
+    for i in range(len(dates)):
         res += dates[i] + "\n"
         for j in range(len(info[i])):
             res += info[i][j][0] + " " + info[i][j][1] + "\n"
