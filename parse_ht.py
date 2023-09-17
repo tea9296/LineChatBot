@@ -47,9 +47,9 @@ def getSchedule(url:str="https://schedule.hololive.tv/simple/hololive"):
     # get current day, only month and day
     today = datetime.datetime.now(tw).strftime("%m/%d")
     # get yesterday, only month and day
-    yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%m/%d")
+    yesterday = (datetime.datetime.now(tw) - datetime.timedelta(days=1)).strftime("%m/%d")
     # get tomorrow, only month and day
-    tomorrow = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%m/%d")
+    tomorrow = (datetime.datetime.now(tw) + datetime.timedelta(days=1)).strftime("%m/%d")
     dates = [yesterday, today, tomorrow]
     res = ""
 
