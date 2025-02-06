@@ -5,7 +5,8 @@ import datetime
 import pytz
 
 
-def getLiveInfo(url: str = "https://schedule.hololive.tv/simple"):
+def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
+                need_title: bool = False):
     # set header in order to post timezone cookie
     headers = {
         "cookie":
@@ -38,21 +39,24 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple"):
         sep_idol = re.split(pattern_name, sep_date[i])[1:]
         temp = []
         for j in range(len(sep_idol)):
-
-            gettitle = requests.get(liveUrl[url_count])
-            stt = bs4.BeautifulSoup(gettitle.text, 'html.parser')
-            title = str(stt.find_all(name="title")[0]).replace('<title>',
-                                                               '')[:20]
-
-            temp.append((sep_idol[j].replace('\r',
-                                             ' '), title, liveUrl[url_count]))
+            if need_title:
+                gettitle = requests.get(liveUrl[url_count])
+                stt = bs4.BeautifulSoup(gettitle.text, 'html.parser')
+                title = '(' + str(stt.find_all(name="title")[0]).replace(
+                    '<title>', '')[:20] + ')'
+            else:
+                title = ""
+            print(title)
+            temp.append(
+                (sep_idol[j].replace('\r', ' ') + title, liveUrl[url_count]))
             url_count += 1
         res.append(temp)
     return res
 
 
-def getSchedule(url: str = "https://schedule.hololive.tv/simple/hololive"):
-    info = getLiveInfo(url)
+def getSchedule(url: str = "https://schedule.hololive.tv/simple/hololive",
+                need_title: bool = False):
+    info = getLiveInfo(url, need_title)
     tw = pytz.timezone('Asia/Taipei')
     # get current day, only month and day
     today = datetime.datetime.now(tw).strftime("%m/%d")
@@ -69,7 +73,7 @@ def getSchedule(url: str = "https://schedule.hololive.tv/simple/hololive"):
         res += dates[i] + "\n"
 
         for j in range(len(info[i])):
-            res += info[i][j][0] + f"({info[i][j][1]}) " + info[i][j][2] + "\n"
+            res += info[i][j][0] + info[i][j][1] + "\n"
         res += "\n"
     return res
 
@@ -98,6 +102,3 @@ def exchange_rate():
                     "      " + current_info[i + 3].get_text() + "\n")
 
     return res_str
-
-
-print(getSchedule())
