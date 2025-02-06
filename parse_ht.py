@@ -119,6 +119,3 @@ def exchange_rate():
                     "      " + current_info[i + 3].get_text() + "\n")
 
     return res_str
-
-
-print(getSchedule("https://schedule.hololive.tv/simple/english", ))
