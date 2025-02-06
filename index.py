@@ -53,7 +53,8 @@ def handle_message(event):
         return
     elif event.message.text.lower() in ["en title", "english title"]:
 
-        reply_msg = "hi eng title"
+        reply_msg = parse_ht.getSchedule(
+            "https://schedule.hololive.tv/simple/english", need_title=True)
         line_bot_api.reply_message(event.reply_token,
                                    TextSendMessage(text=reply_msg))
         return

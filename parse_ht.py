@@ -35,7 +35,7 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
     sep_date = re.split(pattern_date, liveTime[0])[1:]
 
     url_count = 8
-    for i in range(len(sep_date)):
+    for i in range(1):  #len(sep_date)
         sep_idol = re.split(pattern_name, sep_date[i])[1:]
         temp = []
         for j in range(len(sep_idol)):
