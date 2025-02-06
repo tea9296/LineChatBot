@@ -29,13 +29,13 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
     liveUrl = [url_info[i].get("href") for i in range(len(url_info))]
 
     pattern_name = r'(?=\d{2}:\d{2})'
-    pattern_date = pattern = r'\r\d{2}/\d{2}\r\([^)]+\)\r'
+    pattern_date = r'\r\d{2}/\d{2}\r\([^)]+\)\r'
     res = []
 
     sep_date = re.split(pattern_date, liveTime[0])[1:]
 
     url_count = 8
-    for i in range(1):  #len(sep_date)
+    for i in range(1, 2):  #len(sep_date)
         sep_idol = re.split(pattern_name, sep_date[i])[1:]
         temp = []
         for j in range(len(sep_idol)):
@@ -43,7 +43,7 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
                 gettitle = requests.get(liveUrl[url_count])
                 stt = bs4.BeautifulSoup(gettitle.text, 'html.parser')
                 title = '(' + str(stt.find_all(name="title")[0]).replace(
-                    '<title>', '')[:20] + ')'
+                    '<title>', '').replace('- YouTube</title>', '')[:30] + ')'
             else:
                 title = ""
             temp.append(
@@ -65,7 +65,7 @@ def getSchedule(url: str = "https://schedule.hololive.tv/simple/hololive",
     # get tomorrow, only month and day
     tomorrow = (datetime.datetime.now(tw) +
                 datetime.timedelta(days=1)).strftime("%m/%d")
-    dates = [yesterday, today, tomorrow]
+    dates = [today, tomorrow]  #yesterday,
     res = ""
 
     for i in range(min(len(dates), len(info))):
