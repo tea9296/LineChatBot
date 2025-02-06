@@ -47,10 +47,7 @@ def handle_message(event):
             "schedule", "hololive", "jp", "japanese", "holo"
     ]:
 
-        if "title" in event.message.text.lower():
-            reply_msg = parse_ht.getSchedule(need_title=True)
-        else:
-            reply_msg = parse_ht.getSchedule()
+        reply_msg = parse_ht.getSchedule()
         line_bot_api.reply_message(event.reply_token,
                                    TextSendMessage(text=reply_msg))
         return

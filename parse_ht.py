@@ -46,7 +46,6 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
                     '<title>', '')[:20] + ')'
             else:
                 title = ""
-            print(title)
             temp.append(
                 (sep_idol[j].replace('\r', ' ') + title, liveUrl[url_count]))
             url_count += 1
