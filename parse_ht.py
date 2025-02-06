@@ -5,6 +5,23 @@ import datetime
 import pytz
 
 
+def gettitle(url: str) -> str:
+
+    import urllib.request
+    import json
+    import urllib
+
+    params = {"format": "json", "url": url}
+    baseurl = "https://www.youtube.com/oembed"
+    query_string = urllib.parse.urlencode(params)
+    furl = baseurl + "?" + query_string
+
+    with urllib.request.urlopen(furl) as response:
+        response_text = response.read()
+        data = json.loads(response_text.decode())
+    return data['title']
+
+
 def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
                 need_title: bool = False):
     # set header in order to post timezone cookie
@@ -40,11 +57,13 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
         sep_idol = re.split(pattern_name, sep_date[i])[1:]
         temp = []
         for j in range(len(sep_idol)):
-            if i == 1 and title_count < 5:
-                gettitle = requests.get(liveUrl[url_count])
-                stt = bs4.BeautifulSoup(gettitle.text, 'html.parser')
-                title = '(' + str(stt.find_all(name="title")[0]).replace(
-                    '<title>', '').replace('- YouTube</title>', '')[:30] + ')'
+            if i >= 1 and title_count < 20:
+                # gettitle = requests.get(liveUrl[url_count])
+                # stt = bs4.BeautifulSoup(gettitle.text, 'html.parser') str(stt.find_all(name="title")[0])
+
+                yttitle = gettitle(liveUrl[url_count])
+                title = '(' + yttitle.replace('<title>', '').replace(
+                    '- YouTube</title>', '')[:30] + ')'
                 title_count += 1
             else:
                 title = ""
@@ -74,7 +93,7 @@ def getSchedule(url: str = "https://schedule.hololive.tv/simple/hololive",
         res += dates[i] + "\n"
 
         for j in range(len(info[i])):
-            res += info[i][j][0] + info[i][j][1] + "\n"
+            res += info[i][j][0] + " " + info[i][j][1] + "\n"
         res += "\n"
     return res
 
@@ -103,3 +122,6 @@ def exchange_rate():
                     "      " + current_info[i + 3].get_text() + "\n")
 
     return res_str
+
+
+print(getSchedule("https://schedule.hololive.tv/simple/english", ))
