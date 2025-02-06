@@ -58,12 +58,9 @@ def getLiveInfo(url: str = "https://schedule.hololive.tv/simple",
         temp = []
         for j in range(len(sep_idol)):
             if i >= 1 and title_count < 20:
-                # gettitle = requests.get(liveUrl[url_count])
-                # stt = bs4.BeautifulSoup(gettitle.text, 'html.parser') str(stt.find_all(name="title")[0])
 
                 yttitle = gettitle(liveUrl[url_count])
-                title = '(' + yttitle.replace('<title>', '').replace(
-                    '- YouTube</title>', '')[:30] + ')'
+                title = '(' + yttitle[:30] + ')'
                 title_count += 1
             else:
                 title = ""
