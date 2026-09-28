@@ -62,7 +62,11 @@ def handle_message(event):
 
     elif event.message.text.lower() in ["匯率", "rate", "exchange"]:
 
-        reply_msg = parse_ht.exchange_rate()
+        try:
+            reply_msg = parse_ht.exchange_rate()
+        except Exception as e:
+            app.logger.exception(e)
+            reply_msg = "目前無法取得匯率，請稍後再試"
         line_bot_api.reply_message(event.reply_token,
                                    TextSendMessage(text=reply_msg))
         return

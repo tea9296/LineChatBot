@@ -4,3 +4,4 @@ line-bot-sdk
 openai
 beautifulsoup4==4.12.2
 pytz
+requests
